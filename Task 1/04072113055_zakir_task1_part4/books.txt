@@ -1,0 +1,6 @@
+ID: 19, Title: AlgorithmDesignAndApplications, Edition: 3, PressName: Wiley 
+ID: 20, Title: TOA, Edition: 2, PressName: Akmal 
+ID: 20, Title: WAF, Edition: 2, PressName: Nodejs 
+ID: 20, Title: IDL, Edition: 2, PressName: stenford 
+ID: 24, Title: AI, Edition: 2, PressName: Devsinc 
+ID: 11, Title: Peaky, Edition: 3, PressName: cilian 

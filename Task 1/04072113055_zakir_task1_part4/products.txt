@@ -1,0 +1,6 @@
+ID: 89, Title: Samsung, Price: 75K 
+ID: 10, Title: iphone, Price: 139K 
+ID: 20, Title: infinix, Price: 13K 
+ID: 30, Title: oppo, Price: 23K 
+ID: 40, Title: google, Price: 50k 
+ID: 13, Title: honda, Price: 4500K 

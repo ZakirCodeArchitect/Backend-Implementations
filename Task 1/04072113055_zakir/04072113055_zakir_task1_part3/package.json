@@ -1,0 +1,16 @@
+{
+    "name": "task-3",
+    "version": "1.0.0",
+    "main": "part_3.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon part_4.js"
+    },
+    "author": "zakir",
+    "license": "ISC",
+    "description": "",
+    "devDependencies": {
+        "nodemon": "^3.1.7"
+    }
+}

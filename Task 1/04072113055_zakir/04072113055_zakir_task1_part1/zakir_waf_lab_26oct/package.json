@@ -1,0 +1,12 @@
+{
+    "name": "zakir_waf_lab1_part1__25oct",
+    "version": "1.0.0",
+    "description": "Lab Task 1 Part 1",
+    "main": "part_1.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Zakir Matloob",
+    "license": "ISC"
+}
