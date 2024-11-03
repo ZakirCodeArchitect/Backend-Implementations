@@ -5,69 +5,65 @@ const users = require("./MOCK_DATA.json");
 const fs = require("fs");
 
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json()); // Ensure you can parse JSON bodies
 
-let classA = [];
-let classB = [];
-let classC = [];
+let classA = [],
+    classB = [],
+    classC = [],
+    classD = [],
+    classE = [];
 
 app.get("/ip", (req, res) => {
   users.forEach((user) => {
-    let IP = Number(user.ip_address.split(".")[0]);
-    
-    if (IP >= 1 && IP <= 126) {
+    let firstOctet = Number(user.ip_address.split(".")[0]);
+
+    if (firstOctet >= 1 && firstOctet <= 126) {
       classA.push({ id: classA.length + 1, user });
-    } else if (IP >= 128 && IP <= 191) {
+    } else if (firstOctet >= 128 && firstOctet <= 191) {
       classB.push({ id: classB.length + 1, user });
-    } else if (IP >= 192 && IP <= 223) {
+    } else if (firstOctet >= 192 && firstOctet <= 223) {
       classC.push({ id: classC.length + 1, user });
+    } else if (firstOctet >= 224 && firstOctet <= 239) {
+      classD.push({ id: classD.length + 1, user });
+    } else if (firstOctet >= 240 && firstOctet <= 255) {
+      classE.push({ id: classE.length + 1, user });
     }
   });
 
   // Write to JSON files once after all classifications
-  fs.writeFile("A.json", JSON.stringify(classA), (err) => {
-    if (err) console.log(err);
-    else console.log("Successfully created File A");
-  });
-  
-  fs.writeFile("B.json", JSON.stringify(classB), (err) => {
-    if (err) console.log(err);
-    else console.log("Successfully created File B");
-  });
-  
-  fs.writeFile("C.json", JSON.stringify(classC), (err) => {
-    if (err) console.log(err);
-    else console.log("Successfully created File C");
-  });
+  const classes = { 
+    A: classA, 
+    B: classB, 
+    C: classC, 
+    D: classD, 
+    E: classE 
+  };
 
-  return res.json({ Aclass: classA, Bclass: classB, Cclass: classC });
+  for (const [key, value] of Object.entries(classes)) {
+    fs.writeFile(`${key}.json`, JSON.stringify(value), (err) => {
+      if(err){ 
+        console.log(err);
+      }
+      else console.log(`Successfully created File ${key}`);
+    });
+  }
+
+  return res.json(classes);
 });
 
-app
-  .route("/api/users/:id")
-  .get((req, res) => {
-    const id = Number(req.params.id);
-    const user = users.find((user) => user.id === id);
-    res.json(user);
-  })
-  .post((req, res) => {
-    const body = req.body;
-    users.push({ id: users.length + 1, ...body });
+app.get("/ip/:class", (req, res) => {
 
-    fs.writeFile("./MOCK_DATA.json", JSON.stringify(users), (err) => {
+  // Enter A,B,C,D,E
+    const className = req.params.class.toUpperCase();
+
+    fs.readFile(`${className}.json`, "utf-8", (err,data) => {
       if (err) {
-        console.error(err);
-        res.status(500).json({ message: "Error writing file" });
-      } else {
-        res.json({ message: "User added successfully" });
-      }
-    });
+        res.status(500).json({ message: "Error Reading files" });
+      } 
+      const ipData = JSON.parse(data);
+      return res.json(ipData);
   })
-  .patch((req, res) => {
-    res.json({ message: "Update a User" });
-  })
-  .delete((req, res) => {
-    res.json({ message: "Delete a User" });
-  });
+});
 
 const PORT = process.env.PORT || 3001;
 
