@@ -13,42 +13,81 @@ let classA = [],
     classD = [],
     classE = [];
 
-app.get("/ip", (req, res) => {
+app.post("/ip", (req, res) => {
   users.forEach((user) => {
     let firstOctet = Number(user.ip_address.split(".")[0]);
 
-    if (firstOctet >= 1 && firstOctet <= 126) {
-      classA.push({ id: classA.length + 1, user });
-    } else if (firstOctet >= 128 && firstOctet <= 191) {
+    // user which will fall in the condition will get pushed in the respective array
+    if (firstOctet >= 1 && firstOctet <= 126) 
+    {
+      classA.push({ id: classA.length + 1, user });   
+    } 
+    else if (firstOctet >= 128 && firstOctet <= 191) 
+    {
       classB.push({ id: classB.length + 1, user });
-    } else if (firstOctet >= 192 && firstOctet <= 223) {
+    } 
+    else if (firstOctet >= 192 && firstOctet <= 223) 
+    {
       classC.push({ id: classC.length + 1, user });
-    } else if (firstOctet >= 224 && firstOctet <= 239) {
+    } 
+    else if (firstOctet >= 224 && firstOctet <= 239) 
+    {
       classD.push({ id: classD.length + 1, user });
-    } else if (firstOctet >= 240 && firstOctet <= 255) {
+    } 
+    else if (firstOctet >= 240 && firstOctet <= 255) 
+    {
       classE.push({ id: classE.length + 1, user });
     }
   });
 
-  // Write to JSON files once after all classifications
-  const classes = { 
-    A: classA, 
-    B: classB, 
-    C: classC, 
-    D: classD, 
-    E: classE 
-  };
+  // writing IP's in the 
+  fs.writeFile("A.json", JSON.stringify(classA), (err) => {
+    if(err){
+      res.json("Failed to write IP's in File A")
+    }
 
-  for (const [key, value] of Object.entries(classes)) {
-    fs.writeFile(`${key}.json`, JSON.stringify(value), (err) => {
-      if(err){ 
-        console.log(err);
-      }
-      else console.log(`Successfully created File ${key}`);
-    });
-  }
+    res.status(200).json("IP's successfully written in File A")
+  })
 
-  return res.json(classes);
+  fs.writeFile("B.json", JSON.stringify(classB), (err) => {
+    if(err){
+      res.json("Failed to write IP's in File B")
+    }
+
+    res.status(200).json("IP's successfully written in File B")
+  })
+
+  fs.writeFile("C.json", JSON.stringify(classC), (err) => {
+    if(err){
+      res.json("Failed to write IP's in File C")
+    }
+
+    res.status(200).json("IP's successfully written in File C")
+  })
+
+  fs.writeFile("D.json", JSON.stringify(classD), (err) => {
+    if(err){
+      res.json("Failed to write IP's in File D")
+    }
+
+    res.status(200).json("IP's successfully written in File D")
+  })
+
+  fs.writeFile("E.json", JSON.stringify(classE), (err) => {
+    if(err){
+      res.json("Failed to write IP's in File E")
+    }
+
+    res.status(200).json("IP's successfully written in File E")
+  })
+
+  return res.json({
+    classA:classA,
+    classB:classB,
+    classC:classC,
+    classD:classD,
+    classE:classE,
+  })
 });
 
 app.get("/ip/:class", (req, res) => {
