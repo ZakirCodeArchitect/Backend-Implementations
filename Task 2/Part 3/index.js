@@ -68,18 +68,34 @@ app.post("/api/users/:class", (req, res) => {
     });
 });
 
-// Get users with IP Class C
+// Get users with respect to class
 app.get("/ip/:class", (req, res) => {
     const className = req.params.class.toUpperCase();
 
-    fs.readFile(`${className}.json`, "utf-8", (err, data) => {
+    // Check if the class is 'C'
+    if (className !== 'C') {
+        return res.status(400).json({ message: "Enter 'C' class to retrieve the data" });
+    }
+
+    fs.readFile("./MOCK_DATA_2.json", "utf-8", (err, data) => {
         if (err) {
-            return res.status(500).json({ message: "Error reading file" });
+            return res.status(500).json({ message: "Failed to read the file." });
         }
-        const ipData = JSON.parse(data);
-        return res.json(ipData);
+
+        let usersData = JSON.parse(data);
+
+        // Filter to get users with Class C IP addresses (first octet 192 to 223)
+        const classCUsers = usersData.filter((user) => {
+            const firstOctet = parseInt(user.ip_address.split('.')[0], 10);
+            return firstOctet >= 192 && firstOctet <= 223;
+        });
+
+        // Return the filtered data
+        res.status(200).json(classCUsers);
     });
 });
+
+
 
 // able to set organization to QAU of class D and other classes too.
 app.patch('/ip/users/:class', (req, res) => {
@@ -167,7 +183,7 @@ app.route("/api/users")
         const usersData = JSON.parse(data);
         return res.status(200).json(usersData);
     })
-}).post((req, res) => {
+}).post((req, res) => {     // insert some new instances saved in a newly generated .json file.
     const newUser = req.body;
 
     // Check if the user data is provided
@@ -208,7 +224,7 @@ app.route("/api/users")
     });
 });
 
-app.route("/api/users/:id")
+app.route("/api/users/:id")     // to get any user data
 .get((req, res) => {
     const userId = Number(req.params.id);
 
@@ -231,7 +247,7 @@ app.route("/api/users/:id")
         }
     })  
 
-}).patch((req, res) => {
+}).patch((req, res) => {    // to update any user
     const id = Number(req.params.id);
     const index = users.findIndex((user) => user.id ==id )  // getting the index where data is stored in the File.
     
@@ -252,7 +268,7 @@ app.route("/api/users/:id")
     else{
         res.json("User Not Found")
     }
-}).delete((req, res) => {
+}).delete((req, res) => { // to delete any user
     const id = Number(req.params.id);
 
     fs.readFile('./MOCK_DATA_2.json', "utf-8", (err, data) => {
