@@ -1,0 +1,165 @@
+Please enter a MongoDB connection string (Default: mongodb://localhost/):
+
+Current Mongosh Log ID: 6752941fef1a109161893bf7
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.4
+Using MongoDB:          8.0.3
+Using Mongosh:          2.3.4
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-12-05T09:00:11.982+05:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use zakir_database
+switched to db zakir_database
+zakir_database> db.personals_collection.insertMany([ { registration_number: "04072113055", name: "Zakir", city: "Islamabad" }, { registration_number: "04072113098", name: "Ali Khan", city: "Rawalpindi" }, { registration_number: "04072113021", name: "Abdullah", city: "Karachi" }, { registration_number: "04072113041", name: "Hassan", city: "Rawalpindi" }, { registration_number: "04072113051", name: "Hajra", city: "lahore" } ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('67529540ef1a109161893bf8'),
+    '1': ObjectId('67529540ef1a109161893bf9'),
+    '2': ObjectId('67529540ef1a109161893bfa'),
+    '3': ObjectId('67529540ef1a109161893bfb'),
+    '4': ObjectId('67529540ef1a109161893bfc')
+  }
+}
+zakir_database> db.createCollection("academics_collection")
+{ ok: 1 }
+zakir_database> db.academics_collection.insertMany([ { registration_number: "04072113055", degree: "BSCS", enrollment_year: 2021, favorite_course: "DSA" },{ registration_number: "04072113098", degree: "BSCS", enrollment_year: 2019, favorite_course: "Databases" }, { registration_number: "04072113021", degree: "BSCS", enrollment_year: 2020, favorite_course: "IDL"}, { registration_number: "04072113041", degree: "BSCS", enrollment_year: 2022, favorite_course: "WAF" }, { registration_number: "04072113051", degree: "BSCS", enrollment_year: 2020, favorite_course: "Software Construction" } ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('67529668ef1a109161893bfd'),
+    '1': ObjectId('67529668ef1a109161893bfe'),
+    '2': ObjectId('67529668ef1a109161893bff'),
+    '3': ObjectId('67529668ef1a109161893c00'),
+    '4': ObjectId('67529668ef1a109161893c01')
+  }
+}
+zakir_database> db.personals_collection.find().pretty()
+[
+  {
+    _id: ObjectId('67529540ef1a109161893bf8'),
+    registration_number: '04072113055',
+    name: 'Zakir',
+    city: 'Islamabad'
+  },
+  {
+    _id: ObjectId('67529540ef1a109161893bf9'),
+    registration_number: '04072113098',
+    name: 'Ali Khan',
+    city: 'Rawalpindi'
+  },
+  {
+    _id: ObjectId('67529540ef1a109161893bfa'),
+    registration_number: '04072113021',
+    name: 'Abdullah',
+    city: 'Karachi'
+  },
+  {
+    _id: ObjectId('67529540ef1a109161893bfb'),
+    registration_number: '04072113041',
+    name: 'Hassan',
+    city: 'Rawalpindi'
+  },
+  {
+    _id: ObjectId('67529540ef1a109161893bfc'),
+    registration_number: '04072113051',
+    name: 'Hajra',
+    city: 'lahore'
+  }
+]
+zakir_database> db.academics_collection.find().pretty()
+[
+  {
+    _id: ObjectId('67529668ef1a109161893bfd'),
+    registration_number: '04072113055',
+    degree: 'BSCS',
+    enrollment_year: 2021,
+    favorite_course: 'DSA'
+  },
+  {
+    _id: ObjectId('67529668ef1a109161893bfe'),
+    registration_number: '04072113098',
+    degree: 'BSCS',
+    enrollment_year: 2019,
+    favorite_course: 'Databases'
+  },
+  {
+    _id: ObjectId('67529668ef1a109161893bff'),
+    registration_number: '04072113021',
+    degree: 'BSCS',
+    enrollment_year: 2020,
+    favorite_course: 'IDL'
+  },
+  {
+    _id: ObjectId('67529668ef1a109161893c00'),
+    registration_number: '04072113041',
+    degree: 'BSCS',
+    enrollment_year: 2022,
+    favorite_course: 'WAF'
+  },
+  {
+    _id: ObjectId('67529668ef1a109161893c01'),
+    registration_number: '04072113051',
+    degree: 'BSCS',
+    enrollment_year: 2020,
+    favorite_course: 'Software Construction'
+  }
+]
+zakir_database> db.personals_collection.find({ city: "Rawalpindi" }, { name: 1, _id: 0 })
+[ { name: 'Ali Khan' }, { name: 'Hassan' } ]
+zakir_database> db.academics_collection.find({ enrollment_year: 2019 }, { registration_number: 1, _id: 0 }).forEach((student) => { const personal = db.personals_collection.findOne({ registration_number: student.registration_number });  print(personal.name); });
+Ali Khan
+
+zakir_database> db.personals_collection.updateMany( { city: { $in: ["Rawalpindi", "Islamabad"] } }, { $set: { city: "Rawalpindi/Islamabad" } } )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 3,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+zakir_database> const toDelete = db.academics_collection.find({ enrollment_year: { $lt: 2019 } }, { registration_number: 1, _id: 0 }).map(doc => doc.registration_number); toDelete.forEach(regNo => { db.personals_collection.deleteOne({ registration_number: regNo }); db.academics_collection.deleteOne({ registratiregistration_number: regNo }); });
+
+zakir_database>  db.academics_collection.find().pretty()
+[
+  {
+    _id: ObjectId('67529668ef1a109161893bfd'),
+    registration_number: '04072113055',
+    degree: 'BSCS',
+    enrollment_year: 2021,
+    favorite_course: 'DSA'
+  },
+  {
+    _id: ObjectId('67529668ef1a109161893bfe'),
+    registration_number: '04072113098',
+    degree: 'BSCS',
+    enrollment_year: 2019,
+    favorite_course: 'Databases'
+  },
+  {
+    _id: ObjectId('67529668ef1a109161893bff'),
+    registration_number: '04072113021',
+    degree: 'BSCS',
+    enrollment_year: 2020,
+    favorite_course: 'IDL'
+  },
+  {
+    _id: ObjectId('67529668ef1a109161893c00'),
+    registration_number: '04072113041',
+    degree: 'BSCS',
+    enrollment_year: 2022,
+    favorite_course: 'WAF'
+  },
+  {
+    _id: ObjectId('67529668ef1a109161893c01'),
+    registration_number: '04072113051',
+    degree: 'BSCS',
+    enrollment_year: 2020,
+    favorite_course: 'Software Construction'
+  }
+]
+zakir_database>
