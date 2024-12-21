@@ -160,18 +160,38 @@ const removeExpiredProducts = async (req, res) => {
 }
 
 const updateFirmDetails = async (req, res) => {
-    const {firmName, updatedPrice} = req.query;
-    console.log(`Updated Price: ${updatedPrice} of this Firm: ${firmName}`)
+    const {productName, updatedPrice, firms} = req.query;
+    console.log(`Updated Price: ${updatedPrice} of this Product: ${productName} and firms: ${firms}`)
 
     try{
+
+        const firmsList = firms;
+
         const products = await Products.updateMany(
-            {firm_name: { $in: firmName}},
-            {price: updatedPrice}
+            {
+                product_name: productName,
+                firm_name: { $in: firmsList}
+            },
+            {
+                price: updatedPrice
+            }
         );
-        res.status(200).json({
-            message:"Price Updated!",
-            products
-        })
+
+        if(products.matchedCount > 0)
+        {
+            res.status(200).json({
+                message:`Price Updated for this product: ${productName}`,
+                products
+            })
+        }
+        else
+        {
+            res.status(404).json({
+                message:`No product: ${productName} found`,
+                products
+            })
+        }
+        
     }catch(err)
     {
         res.status(404).json({

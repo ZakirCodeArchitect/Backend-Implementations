@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile: </title>
+</head>
+<body>
+  <h1>User Profile Page</h1>
+  <h2>Select Your City</h2>
+  <form action="/profile" method="POST">
+      <label for="email">Email:</label>
+      <input type="email" name="email" required><br>
+
+      <label for="password">Password:</label>
+      <input type="password" name="password" required><br>
+
+      <label for="name">Name:</label>
+      <input type="text" name="name" required><br>
+
+      <label for="gender">Gender:</label>
+      <select name="gender">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+      </select><br>
+
+      <label for="city">City:</label>
+      <select name="city">
+          <% cities.forEach(city => { %>
+              <option value="<%= city.code %>"><%= city.name %></option>
+          <% }) %>
+      </select><br>
+
+      <label for="date_of_birth">Date of Birth:</label>
+      <input type="date" name="date_of_birth" required><br>
+
+      <label for="occupation">Occupation:</label>
+      <input type="text" name="occupation"><br>
+
+      <label for="bio">Bio:</label>
+      <textarea name="bio"></textarea><br>
+
+      <button type="submit">Create Profile</button>
+  </form>
+</body>
+</html>
