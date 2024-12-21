@@ -55,7 +55,42 @@ const render_profile = async(req, res) =>{
     }
 } 
 
+const get_profile = async(req, res) => {
+    const {email, password} = req.body;
+
+    try
+    {
+        // here do not use 'new' because you are searching not inserting
+        const user = await User.findOne({
+            email
+        });
+    
+        if(!user)
+        {
+            return res.send("Error does not exist!!")
+        }
+
+        if(user.password !== password)
+        {
+            return res.send(`Invalid Credentials`)
+        }
+
+        const profile = await UserProfile.findOne({ user_id: user._id });
+
+        if (!profile) {
+        return res.status(404).json({ message: 'Profile not found' });
+        }
+        res.send(profile);
+    }catch(error)
+    {
+        res.send(error)
+    }
+
+    
+
+}
 module.exports = {
     render_profile,
-    create_profile
+    create_profile,
+    get_profile
 }
