@@ -27,10 +27,16 @@ mongoose.connect(MONGODB).then(() => {
 
 // routes:
 // app.use("/", signup);
-app.use("/api", profile);
+app.use("/", profile);
+
+// template engine redering to different files [.ejs]
 app.get('/', (req, res) => {
-    res.send('Welcome to the User Profile Management App!');
-})
+    res.render('index'); // Render index.ejs
+});
+
+app.get('/signin', (req, res) => {
+    res.render('signin'); // Render about.ejs
+});
 
 // Server: 
 app.listen(PORT, () => {
