@@ -1,0 +1,7 @@
+.hero {
+    background: url('/public/heroImage.jpg') no-repeat center center/cover;
+    color: white;
+    padding: 50px;
+    text-align: center;
+  }
+  

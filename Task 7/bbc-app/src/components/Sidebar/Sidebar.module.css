@@ -1,0 +1,9 @@
+.sidebar {
+    background-color:rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgb(197, 78, 78);
+    position: relative;
+    /* align-items: radius ; */
+  }
+  
