@@ -15,9 +15,8 @@ try {
     console.log(err)
 }
 
-
 const fileName = "test.txt";
-const filePath = path.join(process.cwd(), fileName)
+const filePath = path.join(process.cwd(), fileName);
 const fContent = "";
 
 // 4. Write a code statement to create a file named “test.txt”. 

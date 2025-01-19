@@ -64,7 +64,13 @@ function sendEmail(){
     })
 }
 
-signup().then(sendVerificationCode)
-        .then(signin).then(getData).then(checkEmail).then(composeEmail).then(sendEmail).then(()=>{
+signup()
+    .then(sendVerificationCode)
+    .then(signin)
+    .then(getData)
+    .then(checkEmail)
+    .then(composeEmail)
+    .then(sendEmail)
+    .then(()=>{
     console.log("All Tasks Completed")
 })

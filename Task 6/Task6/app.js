@@ -17,7 +17,6 @@ app.use(bodyParser.json()); // to get data from the JSON Body
 app.use(bodyParser.urlencoded({ extended: true })); // to parse URL Encoded Data
 app.set('view engine', 'ejs');
 
-
 //  MongoDB
 mongoose.connect(MONGODB).then(() => {
     console.log("MongoSB successfully connected")

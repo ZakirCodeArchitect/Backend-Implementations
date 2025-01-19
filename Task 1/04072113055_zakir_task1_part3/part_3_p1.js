@@ -21,7 +21,7 @@ function signin(){
 }
 function getData(){
      setTimeout(()=>{
-        console.log("Data retrieved")
+        console.log("Data retrieved");
     },4500)
 }
 function checkEmail(){

@@ -50,11 +50,12 @@ const getProducts = async (req, res) => {
         })
     }
 }
+
 const insertProducts = async (req, res) => {
     try{
         const filePath = path.join(__dirname,'../productsInformation.json' )
         const productsData = fs.readFileSync(filePath, 'utf-8')
-        const products = JSON.parse(productsData);
+        const products = JSON.parse(productsData);  // because we are reading data from file and it is in string format so we need to convert it into JSON format
 
         await Products.insertMany(products);
         res.status(200).json({
@@ -67,7 +68,6 @@ const insertProducts = async (req, res) => {
         res.status(500).json({message:"Failed to insert data in collection"});
     }
 
-    
 }
 
 const certainProduct = async (req, res) => {
@@ -149,7 +149,8 @@ const removeExpiredProducts = async (req, res) => {
             {expiry_date: {$lt: currentDate }}, // less than current date
         );
         res.status(200).json({
-            message:" Expired Products are deleted"
+            message:" Expired Products are deleted",
+            data: "expired prodocuts deleted"
         })
     }catch(err)
     {

@@ -95,7 +95,47 @@ app.get("/ip/:class", (req, res) => {
     });
 });
 
+// genric method: 
+/*
 
+app.get("/ip/:class", (req, res) => {
+    const className = req.params.class.toUpperCase();
+
+    // Define IP class ranges
+    const ipClassRanges = {
+        'A': [1, 126],
+        'B': [128, 191],
+        'C': [192, 223],
+        'D': [224, 239],
+        'E': [240, 255]
+    };
+
+    // Check if the class is valid
+    if (!ipClassRanges[className]) {
+        return res.status(400).json({ message: "Invalid IP class. Enter 'A', 'B', 'C', 'D', or 'E'." });
+    }
+
+    fs.readFile("./MOCK_DATA_2.json", "utf-8", (err, data) => {
+        if (err) {
+            return res.status(500).json({ message: "Failed to read the file." });
+        }
+
+        let usersData = JSON.parse(data);
+
+        // Get the range for the specified class
+        const [min, max] = ipClassRanges[className];
+
+        // Filter to get users with the specified class IP addresses
+        const filteredUsers = usersData.filter((user) => {
+            const firstOctet = parseInt(user.ip_address.split('.')[0], 10);
+            return firstOctet >= min && firstOctet <= max;
+        });
+
+        // Return the filtered data
+        res.status(200).json(filteredUsers);
+    });
+});
+*/
 
 // able to set organization to QAU of class D and other classes too.
 app.patch('/ip/users/:class', (req, res) => {
@@ -183,6 +223,8 @@ app.route("/api/users")
         const usersData = JSON.parse(data);
         return res.status(200).json(usersData);
     })
+    // res.send(users);
+    
 }).post((req, res) => {     // insert some new instances saved in a newly generated .json file.
     const newUser = req.body;
 
@@ -251,7 +293,7 @@ app.route("/api/users/:id")     // to get any user data
     const id = Number(req.params.id);
     const index = users.findIndex((user) => user.id ==id )  // getting the index where data is stored in the File.
     
-    if(index != -1)
+    if(index != -1) // to check the existence of the user
     {
         const updatedDetails = { ...users[index], ...req.body};
         users[index] = updatedDetails;

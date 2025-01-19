@@ -120,3 +120,4 @@ function addToPending(ip) {
 
 // Start the email input prompt
 EmailInput();
+

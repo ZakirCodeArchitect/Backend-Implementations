@@ -7,8 +7,6 @@ const fs = require("fs");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); // Ensure you can parse JSON bodies
 
-
-
 app.route("/:id")
 .get((req, res) => {
     const id = Number(req.params.id)

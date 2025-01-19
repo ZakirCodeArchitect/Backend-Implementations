@@ -3,6 +3,7 @@ const dotenv = require("dotenv").config();
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path')
+// const morgan = require('morgan');
 
 const productsRoute = require("./routes/productsRoute");
 
@@ -10,9 +11,10 @@ const productsRoute = require("./routes/productsRoute");
 
 
 //middleware
-// app.use(express.urlencoded({ extended: false }))
-// app.use(morgan('tiny'));
-app.use(express.static(path.join(__dirname, 'public')));    // for public pages
+app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: false })) // for parsing application/x-www-form-urlencoded
+// app.use(morgan('tiny')); // for logging requests to the console 
+app.use(express.static(path.join(__dirname, 'public'))); // for serving static files
 
 // Constants
 const PORT = process.env.PORT || 3001;
@@ -25,7 +27,6 @@ mongoose.connect(Mongo_DB_URL)
 }).catch((error)=>{
     console.log(`Failed to connect MongoDB : ${error.message}`)
 });
-
 
 // routing 
 app.use("/", productsRoute);

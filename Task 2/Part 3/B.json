@@ -1,14 +1,5 @@
 [
   {
-    "id": 1,
-    "first_name": "Clim",
-    "last_name": "Ascroft",
-    "email": "cascroft0@github.com",
-    "gender": "Male",
-    "ip_address": "147.93.107.193",
-    "organization": "19th Floor"
-  },
-  {
     "id": 9,
     "first_name": "Gene",
     "last_name": "Pucknell",

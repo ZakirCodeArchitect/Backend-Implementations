@@ -8,7 +8,7 @@ const fname = "part_1"
 const fpath = path.join(process.cwd(), fname) // joining current directory
 
 // 3. Inside the part_1.js file, write code to programmatically create a folder named as  “part_1” in the same directory with the .js file (your_name_waf_lab_28sep).
-try {
+try {   
     await fs.mkdir(fpath, { recursive: true })
     console.log("Folder Created : ", fname)
 } catch (err) {
@@ -40,13 +40,14 @@ try {
 
 // 6. Write a code statement to read the data from the “part_1.txt” file (your registration number) and display it on the console. 
 try {
-    const data = await fs.readFile(filePath, "utf-8")
-    console.log("Data Read from the File :", data)
+    const data = await fs.readFile(filePath, "utf-8");
+    console.log("Data Read from the File :", data);
 } catch (err) {
     console.log(err)
 }
 
-// 7. Write code to overwrite your registration number in the “test.txt” with the last four  digits of your registration number. 
+// 7. Write code to overwrite your registration number in the “test.txt” with the last four  
+//    digits of your registration number. 
 
 try {
     const data = await fs.readFile(filePath, "utf-8")
@@ -83,3 +84,4 @@ try {
 } catch (err) {
     console.log(err)
 }
+

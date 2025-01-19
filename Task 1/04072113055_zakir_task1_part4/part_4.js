@@ -1,6 +1,6 @@
 const http = require('http')
 const url = require('url')
-const dotenv = require('dotenv').config();
+require('dotenv').config();
 const fs = require('fs')
 
 
@@ -17,30 +17,29 @@ const log = (reqUrl, queryParams) => {
     const content = `${serialNumber++}. Date: ${date.toISOString()} | URL: ${reqUrl} | Query Params: ${Object.keys(queryParams).length}\n`;
             
     fs.appendFile(fileName, content, (err) =>{
-    if(err)
-    {
-        console.log(err)
-    }
-})
-
+        if(err)
+        {
+            console.log(err)
+        }
+    });
 }
 
-// appending file with Data from the query parameter
+// appending log file with Data from the query parameter
 const StoreData = (fileName, content) => {
     fs.appendFile(fileName, content, (err) => {
         if(err)
         {
             console.log(err)
         }
-    })
-}
+    });
+};
 
 
 http.createServer((req, res) => {
-    let reUrl = req.url;
-    const parsedUrl = url.parse(req.url, true)
-    const pathname = parsedUrl.pathname;
-    const queryParams = parsedUrl.query;
+    let reUrl = req.url;    // request url
+    const parsedUrl = url.parse(req.url, true) // parse the url to get the pathname and query parameters
+    const pathname = parsedUrl.pathname;    // pathname of the url 
+    const queryParams = parsedUrl.query;    // query parameters of the url 
 
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     
@@ -105,3 +104,4 @@ http.createServer((req, res) => {
 }).listen(PORT, hostname, () => {
     console.log(`Server Started on Port : ${PORT}`)
 })
+

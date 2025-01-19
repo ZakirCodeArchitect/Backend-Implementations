@@ -13,10 +13,11 @@ try {
 
     // splitting the data from the file
     const ipAddresses = data
-        .split('\n')
-        .map(ip => ip.trim())
-        .filter(ip => ip);
+        .split('\n')    // to split the data from the file, splits a string into substring based on defined separator.
+        .map(ip => ip.trim()) // to remove the extra spaces from the data
+        .filter(ip => ip);  // to remove the empty strings
 
+    console.log(ipAddresses);
     // declaring and initializing the array with zero
     let classA = [],
         classB = [],
@@ -24,7 +25,8 @@ try {
 
     // running the loop for each ip 
     ipAddresses.forEach(ip => {
-        const firstOctet = parseInt(ip.split('.')[0]);
+
+        const firstOctet = parseInt(ip.split('.')[0]);  // This accesses the first element of the array resulting from the split operation. In the example above, it would be "192".
 
         if (firstOctet >= 1 && firstOctet <= 126) {
             classA.push(ip); // Class A
@@ -34,6 +36,8 @@ try {
             classC.push(ip); // Class C
         }
     });
+
+    // console.log(classA.join('\n'));
 
     // writing data in the respective files
     await fs.writeFile('A.txt', classA.join('\n'), (err) => {

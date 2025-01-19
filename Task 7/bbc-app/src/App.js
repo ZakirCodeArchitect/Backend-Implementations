@@ -11,10 +11,8 @@ function App() {
       {/* 5 components */}
       <Header />
       <HeroSection />
-      {/* <div style={{ display: 'flex', gap: '50px' }}> */}
         <NewsList />
         <Sidebar />
-      {/* </div> */}
       <Footer />
     </div>
   );

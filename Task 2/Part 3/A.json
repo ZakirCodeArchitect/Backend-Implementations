@@ -1,14 +1,5 @@
 [
   {
-    "id": 2,
-    "first_name": "Janessa",
-    "last_name": "Howitt",
-    "email": "jhowitt1@hugedomains.com",
-    "gender": "Female",
-    "ip_address": "24.91.244.212",
-    "organization": "PO Box 78867"
-  },
-  {
     "id": 3,
     "first_name": "Mureil",
     "last_name": "Conner",

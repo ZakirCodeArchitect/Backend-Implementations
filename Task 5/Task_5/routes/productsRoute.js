@@ -12,4 +12,4 @@ router.get("/firm", productsController.certainFirm);
 router.delete("/expiredProducts", productsController.removeExpiredProducts)
 router.put("/firm", productsController.updateFirmDetails);
 
-module.exports = router;
+module.exports = router;                                                                                                

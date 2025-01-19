@@ -2,7 +2,6 @@ const UserProfile = require('../models/profileModel')
 const {City} = require('../models/citySchema')
 const {User} = require('../models/zakirModel');
 
-
 const create_profile = async(req, res) => {
     try {
         const {email, password, name, gender, city, data_of_birth, occupation, bio} = req.body;
@@ -57,7 +56,6 @@ const render_profile = async(req, res) =>{
 
 const get_profile = async(req, res) => {
     const {email, password} = req.body;
-
     try
     {
         // here do not use 'new' because you are searching not inserting
